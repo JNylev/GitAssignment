@@ -64,7 +64,6 @@ public class RandomPlayer implements BattleshipsPlayer
             boolean go = false;
             while(go==false)
             {
-                System.out.println(" john");
                 if(vertical)
                 {
 
@@ -76,10 +75,11 @@ public class RandomPlayer implements BattleshipsPlayer
                     int y = rnd.nextInt(sizeY-(s.size()-1));
                     pos = new Position(x, y);
                     boolean tempGo = true;
-                    System.out.println("her kommer pos "+x+y );
+                    System.out.println("vi har retning true =vertical: "+ vertical+" her kommer pos "+x+y );
                     
                     for (int j = y; j < y+s.size(); j++) 
                     {
+                        System.out.println("for loops pos: "+j);
                         if(preBoard[x][j]==1)
                         {
                             System.out.println("auch");
@@ -106,16 +106,17 @@ public class RandomPlayer implements BattleshipsPlayer
                
                 else
                 {
-                    int x = rnd.nextInt(sizeX);
-                    int y = rnd.nextInt(sizeY-(s.size()-1));
+                    int x = rnd.nextInt(sizeX-(s.size()-1));
+                    int y = rnd.nextInt(sizeY);
                     pos = new Position(x, y);
                     boolean tempGo = true;
-                    System.out.println("her kommer pos "+x+y );
+                    System.out.println("vi har retning true =vertical: "+ vertical+"her kommer pos "+x+y );
                     
                     
                     
                     for (int j = x; j < x+s.size(); j++) 
                     {
+                        System.out.println("for loops pos: "+j);
                         if(preBoard[j][y]==1)
                         {
                             System.out.println("auch2");
@@ -129,18 +130,14 @@ public class RandomPlayer implements BattleshipsPlayer
                     {
                         for (int j = 0; j < s.size(); j++) 
                         {
-                            preBoard[x][y+j]=1;  
+                            preBoard[x+j][y]=1;  
                             //showPreBoard();
                         }
-                    }
-                    else
-                    {
-                    System.out.println("her kommer preboard");
+                        System.out.println("her kommer preboard");
                     
-                    showPreBoard();
-                    
-                        
+                        showPreBoard();
                     }
+                    
 
                 }
             }
@@ -165,9 +162,9 @@ public class RandomPlayer implements BattleshipsPlayer
     
     public void showPreBoard()
     {
-        for (int i = 0; i < 10; i++) 
+        for (int i = 9; i > -1; i--) 
         {
-            for (int j = 0; j < 10; j++) 
+            for (int j = 0; j <10; j++) 
             {
                 System.out.print(preBoard[j][i]);
             }
