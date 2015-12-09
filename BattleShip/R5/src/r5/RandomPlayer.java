@@ -22,6 +22,7 @@ public class RandomPlayer implements BattleshipsPlayer
     private int sizeX;
     private int sizeY;
     private Board myBoard;
+    int[][] preBoard = new int[10][10];
    
     public RandomPlayer()
     {
@@ -47,26 +48,103 @@ public class RandomPlayer implements BattleshipsPlayer
     @Override
     public void placeShips(Fleet fleet, Board board)
     {
+       
+        
+        //preBoard =initPreBoard(preBoard);
         myBoard = board;
         sizeX = board.sizeX();
         sizeY = board.sizeY();
-        for(int i = 0; i < fleet.getNumberOfShips(); ++i)
+        showPreBoard();
+        for(int skibsNr = 0; skibsNr < fleet.getNumberOfShips(); ++skibsNr)
         {
-            Ship s = fleet.getShip(i);
+            System.out.println("så langt er vi nu "+skibsNr);
+            Ship s = fleet.getShip(skibsNr);
             boolean vertical = rnd.nextBoolean();
-            Position pos;
-            if(vertical)
+            Position pos = new Position(10,10);
+            boolean go = false;
+            while(go==false)
             {
-                int x = rnd.nextInt(sizeX);
-                int y = rnd.nextInt(sizeY-(s.size()-1));
-                pos = new Position(x, y);
+                System.out.println(" john");
+                if(vertical)
+                {
+
+                    
+                    int x = rnd.nextInt(sizeX);
+                    int size = s.size();
+                    
+                    
+                    int y = rnd.nextInt(sizeY-(s.size()-1));
+                    pos = new Position(x, y);
+                    boolean tempGo = true;
+                    System.out.println("her kommer pos "+x+y );
+                    
+                    for (int j = y; j < y+s.size(); j++) 
+                    {
+                        if(preBoard[x][j]==1)
+                        {
+                            System.out.println("auch");
+                            tempGo=false;
+                        }
+                    }
+
+                    go=tempGo;
+                    if(tempGo)
+                    {
+                        for (int j = 0; j < s.size(); j++) 
+                        {
+                            preBoard[x][y+j]=1;   
+                            //showPreBoard();
+
+                        }
+                        System.out.println("her kommer preboard");
+                    
+                        showPreBoard();
+                   
+                    }
+                    
+                }
+               
+                else
+                {
+                    int x = rnd.nextInt(sizeX);
+                    int y = rnd.nextInt(sizeY-(s.size()-1));
+                    pos = new Position(x, y);
+                    boolean tempGo = true;
+                    System.out.println("her kommer pos "+x+y );
+                    
+                    
+                    
+                    for (int j = x; j < x+s.size(); j++) 
+                    {
+                        if(preBoard[j][y]==1)
+                        {
+                            System.out.println("auch2");
+                            tempGo=false;
+                        }
+                    
+                    }
+
+                    go=tempGo;
+                    if(tempGo) 
+                    {
+                        for (int j = 0; j < s.size(); j++) 
+                        {
+                            preBoard[x][y+j]=1;  
+                            //showPreBoard();
+                        }
+                    }
+                    else
+                    {
+                    System.out.println("her kommer preboard");
+                    
+                    showPreBoard();
+                    
+                        
+                    }
+
+                }
             }
-            else
-            {
-                int x = rnd.nextInt(sizeX-(s.size()-1));
-                int y = rnd.nextInt(sizeY);
-                pos = new Position(x, y);
-            }
+            System.out.println(s.size());
             board.placeShip(pos, s, vertical);
         }
     }
@@ -84,7 +162,35 @@ public class RandomPlayer implements BattleshipsPlayer
     {
         //Do nothing
     }
-
+    
+    public void showPreBoard()
+    {
+        for (int i = 0; i < 10; i++) 
+        {
+            for (int j = 0; j < 10; j++) 
+            {
+                System.out.print(preBoard[j][i]);
+            }
+            System.out.println("");
+        }
+    }
+    
+    
+    
+    
+    
+    public int[][] initPreBoard(int[][] preBoard)
+    {
+        for (int i = 0; i < 10; i++) 
+        {
+            for (int j = 0; j < 10; j++) 
+            {
+                preBoard[i][j]=0;
+            }
+    
+        }
+        return preBoard;
+    }
     
     /**
      * Called by the Game application to get the Position of your shot.
