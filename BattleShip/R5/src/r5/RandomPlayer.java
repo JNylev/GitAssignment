@@ -23,6 +23,7 @@ public class RandomPlayer implements BattleshipsPlayer
     private int sizeY;
     private Board myBoard;
     int[][] preBoard = new int[10][10];
+    int[][] fireCoord = new int[10][10];
    
     public RandomPlayer()
     {
@@ -203,6 +204,20 @@ public class RandomPlayer implements BattleshipsPlayer
     {
         int x = rnd.nextInt(sizeX);
         int y = rnd.nextInt(sizeY);
+        boolean fired = false;
+            while( !fired )
+            {
+                if( fireCoord[x][y] == 0 )
+                {
+                     fireCoord[x][y] = 1;
+                     fired = true;
+                }
+                else 
+                {
+                    x = rnd.nextInt(sizeX);
+                    y = rnd.nextInt(sizeY);   
+                }
+            } 
         return new Position(x,y);
     }
 

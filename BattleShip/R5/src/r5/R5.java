@@ -34,7 +34,7 @@ public class R5 implements PlayerFactory<BattleshipsPlayer>
     @Override
     public String getName()
     {
-        return "PUSSY(cat) SLAYERS AKA JOHN";
+        return "JOHN";
     }
     
 }
